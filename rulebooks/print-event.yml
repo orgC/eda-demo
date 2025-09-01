@@ -1,5 +1,6 @@
 - name: print incoming events
   hosts: localhost
+  sources: []
   rules:
     - name: log full event
       condition: true
