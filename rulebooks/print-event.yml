@@ -1,6 +1,8 @@
 - name: print incoming events
   hosts: localhost
-  sources: []
+  sources:
+    - name: my_webhook_source
+      ansible.eda.webhook: {} 
   rules:
     - name: log full event
       condition: true
