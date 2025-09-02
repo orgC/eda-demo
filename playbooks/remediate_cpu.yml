@@ -1,0 +1,26 @@
+---
+- name: Remediate CPU (demo)
+  hosts: "{{ target_hosts | default('localhost') }}"
+  gather_facts: false
+
+  vars:
+    alertname: "{{ alertname | default('N/A') }}"
+    instance:  "{{ instance  | default('N/A') }}"
+    severity:  "{{ severity  | default('N/A') }}"
+
+  tasks:
+    - name: Show received alert info
+      ansible.builtin.debug:
+        msg:
+          - "alertname = {{ alertname }}"
+          - "instance  = {{ instance }}"
+          - "severity  = {{ severity }}"
+
+    - name: Check top CPU processes (demo)
+      ansible.builtin.shell: "ps aux --sort=-%cpu | head -n 5"
+      register: top_out
+
+    - name: Print top CPU processes
+      ansible.builtin.debug:
+        var: top_out.stdout
+

@@ -1,0 +1,27 @@
+---
+- name: Remediate Disk (demo)
+  hosts: "{{ target_hosts | default('localhost') }}"
+  gather_facts: false
+
+  vars:
+    alertname: "{{ alertname | default('N/A') }}"
+    instance:  "{{ instance  | default('N/A') }}"
+    severity:  "{{ severity  | default('N/A') }}"
+
+  tasks:
+    - name: Show received alert info
+      ansible.builtin.debug:
+        msg:
+          - "alertname = {{ alertname }}"
+          - "instance  = {{ instance }}"
+          - "severity  = {{ severity }}"
+
+    - name: Check disk usage (demo)
+      ansible.builtin.shell: "df -h | sort -k5 -r | head -n 5"
+      register: df_out
+
+    - name: Print disk usage
+      ansible.builtin.debug:
+        var: df_out.stdout
+
+
