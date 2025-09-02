@@ -1,5 +1,5 @@
 ---
-- name: Remediate Disk (demo)
+- name: Remediate Disk
   hosts: "{{ target_hosts | default('localhost') }}"
   gather_facts: false
 
@@ -16,12 +16,13 @@
           - "instance  = {{ instance }}"
           - "severity  = {{ severity }}"
 
-    - name: Check disk usage (demo)
+    - name: Check disk usage
       ansible.builtin.shell: "df -h | sort -k5 -r | head -n 5"
       register: df_out
 
     - name: Print disk usage
       ansible.builtin.debug:
         var: df_out.stdout
+
 
 
