@@ -5,16 +5,19 @@
 ## 触发 HighCPU → 执行 Remediate-CPU
 
 ```
-WEBHOOK_URL="https://<your-aap>/api/eda/v1/events/<token>"
+WEBHOOK_URL="https://10.72.93.115/eda-event-streams/api/eda/v1/external_event_stream/5e4a01a5-075d-49be-8dfa-c6d34295b1ed/post/"
 
-curl -sS -X POST "$WEBHOOK_URL" \
+USERNAME=eda
+PASSWORD=redhat2025
+
+curl -k -sS -X POST "$WEBHOOK_URL" \
   -u "${USERNAME}:${PASSWORD}" \
   -H 'Content-Type: application/json' \
   -d '{
         "alert": {
           "labels": {
             "alertname": "HighCPU",
-            "instance": "vm-01",
+            "instance": "10.72.93.49",
             "severity": "critical",
             "host": "localhost"
           }
@@ -27,7 +30,7 @@ curl -sS -X POST "$WEBHOOK_URL" \
 ## 触发 DiskFull → 执行 Remediate-Disk
 
 ```
-curl -sS -X POST "$WEBHOOK_URL" \
+curl -k -sS -X POST "$WEBHOOK_URL" \
   -u "${USERNAME}:${PASSWORD}" \
   -H 'Content-Type: application/json' \
   -d '{
@@ -46,7 +49,7 @@ curl -sS -X POST "$WEBHOOK_URL" \
 ## 触发未知告警 → 命中 catch-all（只打印日志）
 
 ```
-curl -sS -X POST "$WEBHOOK_URL" \
+curl -k -sS -X POST "$WEBHOOK_URL" \
   -u "${USERNAME}:${PASSWORD}" \
   -H 'Content-Type: application/json' \
   -d '{
