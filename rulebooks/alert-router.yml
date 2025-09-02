@@ -2,7 +2,7 @@
 - name: route-alerts-by-alertname
   hosts: localhost
   sources:
-    - ansible.eda.webhook: {}   # 在 UI 里绑定 Event Stream 即可
+    - ansible.eda.webhook: {}
 
   rules:
     - name: handle HighCPU
@@ -16,7 +16,6 @@
               alertname: "{{ event.alert.labels.alertname | default('N/A') }}"
               instance:  "{{ event.alert.labels.instance   | default('N/A') }}"
               severity:  "{{ event.alert.labels.severity   | default('N/A') }}"
-              # 目标主机：可直接传 Inventory 里的主机名，或默认 localhost
               target_hosts: "{{ event.alert.labels.host | default('localhost') }}"
 
     - name: handle DiskFull
@@ -33,7 +32,7 @@
               target_hosts: "{{ event.alert.labels.host | default('localhost') }}"
 
     - name: catch-all for unknown alerts
-      condition: event is defined
+      condition:  1 == 1
       action:
         debug:
           msg: >
