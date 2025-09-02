@@ -1,0 +1,19 @@
+---
+- name: Echo Diskfull alert (no remote ops)
+  hosts: localhost
+  connection: local        # 不连远程
+  gather_facts: false      # 不收集事实，进一步加速
+  become: false
+
+  # 这些变量来自 EDA 的 run_job_template -> job_args.extra_vars
+  vars:
+    alertname: "{{ alertname | default('N/A') }}"
+    instance:  "{{ instance  | default('N/A') }}"
+    severity:  "{{ severity  | default('N/A') }}"
+
+  tasks:
+    - name: Print alert summary
+      ansible.builtin.debug:
+        msg: "DiskFull alert received: alertname={{ alertname }}, instance={{ instance }}, severity={{ severity }}"
+
+

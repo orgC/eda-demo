@@ -5,7 +5,7 @@
 ## 触发 HighCPU → 执行 Remediate-CPU
 
 ```
-WEBHOOK_URL="https://10.72.93.115/eda-event-streams/api/eda/v1/external_event_stream/5e4a01a5-075d-49be-8dfa-c6d34295b1ed/post/"
+WEBHOOK_URL="https://10.72.93.115/eda-event-streams/api/eda/v1/external_event_stream/89aec22e-81ca-4062-a6a6-e9105b67f59c/post/"
 
 USERNAME=eda
 PASSWORD=redhat2025

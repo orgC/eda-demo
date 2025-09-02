@@ -31,12 +31,12 @@
               severity:  "{{ event.payload.alert.labels.severity   | default('N/A') }}"
               target_hosts: "{{ event.payload.alert.labels.host | default('localhost') }}"
 
-    # 兜底（可保留你之前的 1==1，或更保险地判定 payload 存在）
     - name: catch-all for unknown alerts
       condition: event.payload is defined
       action:
         debug:
           msg: >
+            Capture all unmatched events and only print the event information.
             Unknown alert: {{ event.payload.alert.labels.alertname | default('N/A') }}
             Full payload: {{ event.payload | to_json }}
 
