@@ -2,7 +2,7 @@
 - name: route-alerts-by-alertname
   hosts: localhost
   sources:
-    - ansible.eda.webhook: {}
+    - ansible.eda.pg_listener: {}
 
   rules:
     - name: handle HighCPU
