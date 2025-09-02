@@ -32,12 +32,16 @@
               target_hosts: "{{ event.payload.alert.labels.host | default('localhost') }}"
 
     - name: catch-all for unknown alerts
-      condition: event.payload is defined
+      condition:  1 == 1
       action:
-        debug:
-          msg: >
-            Capture all unmatched events and only print the event information.
-            Unknown alert: {{ event.payload.alert.labels.alertname | default('N/A') }}
-            Full payload: {{ event.payload | to_json }}
+        run_job_template:
+          name: "echo-msg"
+          organization: "Default"
+          job_args:
+            extra_vars:
+              alertname: "{{ event.payload.alert.labels.alertname | default('N/A') }}"
+              instance:  "{{ event.payload.alert.labels.instance   | default('N/A') }}"
+              severity:  "{{ event.payload.alert.labels.severity   | default('N/A') }}"
+              target_hosts: "{{ event.payload.alert.labels.host | default('localhost') }}"
 
 
