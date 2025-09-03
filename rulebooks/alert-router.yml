@@ -4,12 +4,26 @@
   sources:
     - ansible.eda.pg_listener: {}
 
+
   rules:
     - name: handle HighCPU
       condition: event.payload.alert.labels.alertname == "HighCPU"
       action:
         run_job_template:
           name: "Remediate-CPU"
+          organization: "Default"
+          job_args:
+            extra_vars:
+              alertname: "{{ event.payload.alert.labels.alertname | default('N/A') }}"
+              instance:  "{{ event.payload.alert.labels.instance   | default('N/A') }}"
+              severity:  "{{ event.payload.alert.labels.severity   | default('N/A') }}"
+              target_hosts: "{{ event.payload.alert.labels.host | default('localhost') }}"
+
+    - name: handle serviceIssue
+      condition: event.payload.alert.labels.alertname == "serviceIssue"
+      action:
+        run_job_template:
+          name: "Remediate-basic-info"
           organization: "Default"
           job_args:
             extra_vars:
